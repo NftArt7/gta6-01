@@ -1,1 +1,1 @@
-[{"name":"1-start.jpg","query":"?shot=start&seed=1"},{"name":"2-play.jpg","query":"?shot=play&seed=1"},{"name":"3-end.jpg","query":"?shot=end&seed=1"}]
+{"shots":[{"file":"1-start.jpg","label":"Title screen over Solmar City","url":"?shot=start&seed=1"},{"file":"2-play.jpg","label":"Mid-chase in the Comet GT, two stars","url":"?shot=play&seed=1"},{"file":"3-end.jpg","label":"City Legend at golden hour on the pier","url":"?shot=end&seed=1"}]}

@@ -1,49 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
-<title>Solmar City — Open-World Heist</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0e14; font-family: 'Segoe UI', system-ui, sans-serif; }
-  #game, #game canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
-  #hud { position: fixed; inset: 0; pointer-events: none; color: #fff; z-index: 5; }
-  #hud-top-left { position: absolute; top: 16px; left: 16px; }
-  #hud-money { font-size: 30px; font-weight: 800; color: #7dff9b; text-shadow: 0 2px 6px rgba(0,0,0,.7); }
-  #hud-health { margin-top: 6px; width: 210px; height: 18px; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.35); border-radius: 9px; overflow: hidden; position: relative; }
-  #hud-health-fill { height: 100%; width: 100%; background: #58b368; transition: width .2s; }
-  #hud-health-text { position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; line-height: 18px; text-shadow: 0 1px 2px #000; }
-  #hud-objective { margin-top: 10px; max-width: 420px; background: rgba(0,0,0,.55); border-left: 4px solid #ffd23c; padding: 8px 12px; font-size: 14px; line-height: 1.4; border-radius: 0 6px 6px 0; }
-  #hud-top-right { position: absolute; top: 16px; right: 16px; text-align: right; }
-  #hud-stars { font-size: 26px; letter-spacing: 4px; text-shadow: 0 2px 6px rgba(0,0,0,.8); }
-  #hud-stars .star { color: rgba(255,255,255,.25); }
-  #hud-stars .star.on { color: #ffd23c; }
-  #hud-minimap { margin-top: 8px; border: 2px solid rgba(255,255,255,.5); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
-  #hud-clock { margin-top: 6px; font-size: 20px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,.8); }
-  #hud-bottom-right { position: absolute; right: 20px; bottom: 18px; font-size: 34px; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
-  #hud-bottom-right small { font-size: 15px; font-weight: 600; }
-  #hud-toast { position: absolute; left: 50%; bottom: 90px; transform: translateX(-50%); background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.3); padding: 10px 18px; border-radius: 8px; font-size: 16px; font-weight: 600; opacity: 0; transition: opacity .3s; white-space: nowrap; }
-  #hud-toast.show { opacity: 1; }
-  #hud-screen { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-  #hud-screen .panel { pointer-events: auto; text-align: center; background: rgba(8,12,20,.82); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 36px 48px; max-width: 560px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
-  #hud-screen h1 { font-size: 52px; letter-spacing: 4px; font-weight: 900; background: linear-gradient(180deg, #ffe9a8, #ff9d5c); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #hud-screen .tag { margin: 12px 0 18px; font-size: 16px; line-height: 1.5; color: #dfe6ee; }
-  #hud-screen .controls { font-size: 14px; line-height: 1.9; color: #aeb9c6; margin-bottom: 20px; }
-  #hud-screen .controls b { color: #ffd23c; }
-  #hud-screen button { display: block; width: 280px; margin: 10px auto 0; padding: 13px; font-size: 17px; font-weight: 800; letter-spacing: 1px; color: #10131a; background: linear-gradient(180deg, #ffd23c, #f5a623); border: none; border-radius: 10px; cursor: pointer; }
-  #hud-screen button:hover { filter: brightness(1.1); }
-  #hud-screen .fine { margin-top: 18px; font-size: 12px; color: #8b98a8; line-height: 1.5; }
-  #hud-screen .stats { font-size: 19px; line-height: 1.8; margin: 8px 0 14px; }
-</style>
-</head>
-<body>
-<div id="game"></div>
-<div id="hud"></div>
-<script type="importmap">
-{ "imports": { "three": "./vendor/three.module.min.js" } }
-</script>
-<script type="module" src="./src/main.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solmar City — Open-World Heist</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 100%; height: 100%; overflow: hidden; background: #0c1218; font-family: Arial, Helvetica, sans-serif; }
+      #app, #app canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+      .panel { background: rgba(10, 16, 22, 0.78); border: 1px solid rgba(240, 192, 32, 0.35); border-radius: 10px; color: #f0ead8; }
+      #hud-top { position: fixed; top: 14px; left: 14px; padding: 10px 14px; display: flex; gap: 18px; align-items: center; z-index: 5; }
+      #cash { font-size: 22px; font-weight: bold; color: #f0c020; letter-spacing: 0.5px; }
+      #stars { font-size: 20px; letter-spacing: 2px; }
+      #stars .star { color: rgba(255, 255, 255, 0.25); }
+      #stars .star.on { color: #ffd94a; text-shadow: 0 0 8px rgba(255, 217, 74, 0.9); }
+      #timer { font-size: 22px; font-weight: bold; color: #ffffff; }
+      #timer.urgent { color: #ff5040; }
+      #minimap { position: fixed; top: 14px; right: 14px; width: 150px; height: 150px; border: 1px solid rgba(240, 192, 32, 0.5); border-radius: 10px; z-index: 5; }
+      #objective { position: fixed; left: 50%; bottom: 92px; transform: translateX(-50%); padding: 10px 18px; font-size: 16px; text-align: center; z-index: 5; max-width: 70vw; }
+      #obj-dist { color: #f0c020; font-weight: bold; margin-left: 8px; }
+      #speed { position: fixed; left: 14px; bottom: 14px; padding: 10px 16px; z-index: 5; text-align: center; min-width: 110px; }
+      #speed b { font-size: 30px; color: #ffffff; display: block; line-height: 1; }
+      #speed span { font-size: 11px; letter-spacing: 2px; color: #f0c020; }
+      #hint { position: fixed; right: 14px; bottom: 14px; padding: 8px 12px; font-size: 12px; color: rgba(240, 234, 216, 0.85); z-index: 5; }
+      #toast { position: fixed; top: 84px; left: 50%; transform: translateX(-50%); padding: 10px 20px; font-size: 15px; background: rgba(10, 16, 22, 0.85); border: 1px solid rgba(240, 192, 32, 0.5); border-radius: 8px; color: #ffe9a8; opacity: 0; transition: opacity 0.3s; z-index: 6; pointer-events: none; max-width: 80vw; text-align: center; }
+      #toast.show { opacity: 1; }
+      #arrow { position: fixed; left: 50%; top: 46%; font-size: 34px; color: #f0c020; text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); z-index: 4; pointer-events: none; opacity: 0; }
+      #overlay { position: fixed; inset: 0; background: rgba(6, 10, 14, 0.55); display: none; align-items: center; justify-content: center; z-index: 10; }
+      #overlay.show { display: flex; }
+      #overlay-card { max-width: 620px; width: 88vw; padding: 34px 38px; text-align: center; background: rgba(10, 16, 22, 0.92); border: 1px solid rgba(240, 192, 32, 0.55); border-radius: 14px; color: #f0ead8; }
+      #overlay-title { font-size: 44px; letter-spacing: 6px; color: #f0c020; margin-bottom: 12px; }
+      #overlay-text { font-size: 15px; line-height: 1.65; }
+      #overlay-text ul { text-align: left; margin: 14px auto 4px; max-width: 420px; }
+      #overlay-text li { margin: 5px 0; }
+      #overlay-text .controls { margin-top: 16px; font-size: 13px; color: #c8c0a8; }
+      #overlay-btn { margin-top: 22px; padding: 13px 30px; font-size: 16px; font-weight: bold; letter-spacing: 1px; color: #14100a; background: #f0c020; border: none; border-radius: 8px; cursor: pointer; }
+      #overlay-btn:hover { background: #ffd94a; }
+    </style>
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three.module.min.js" } }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud-top" class="panel">
+      <span id="cash">$0</span>
+      <span id="stars"></span>
+      <span id="timer"></span>
+    </div>
+    <canvas id="minimap" width="150" height="150"></canvas>
+    <div id="objective" class="panel"><span id="objective-text"></span><span id="obj-dist"></span></div>
+    <div id="speed" class="panel"><b id="speed-value">0</b><span id="speed-label">ON FOOT</span></div>
+    <div id="hint" class="panel">WASD move / drive · E enter car · Space handbrake · P pause · M mute</div>
+    <div id="toast"></div>
+    <div id="arrow">➤</div>
+    <div id="overlay">
+      <div id="overlay-card">
+        <div id="overlay-title">SOLMAR CITY</div>
+        <div id="overlay-text"></div>
+        <button id="overlay-btn">START</button>
+      </div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
 </html>
